@@ -4,7 +4,7 @@ import scipy.io.wavfile as wavfile
 import IPython.display as ipd
 import scipy.io.wavfile as wavfile
 
-def plot_fourier_mag(x,fs):
+def plot_fourier_mag(x,fs,res_string):
     """
     Given audio samples and the sample rate, plot
     the magnitude of the Fourier transform of x with 
@@ -21,6 +21,28 @@ def plot_fourier_mag(x,fs):
     plt.plot(freqs, np.abs(xft))
     plt.xlabel("Frequency")
     plt.ylabel("Magnitude")
+    plt.savefig("sonisrc/imgfigres/fouriermag" + res_string + ".png")
+
+def load_audio_mono(filename):
+    """
+    Load audio from a .wav file, mixing stereo 
+    to mono if necessary
+    Parameters
+    ----------
+    filename: string
+        Path to file
+    
+    Returns
+    -------
+    fs: int
+        Sample rate
+    x: ndarray(N)
+        Mono audio
+    """
+    fs, x = wavfile.read(filename)
+    if len(x.shape) > 1:
+        x = np.mean(x, 1)
+    return fs, x
 
 """
 //////////////////////////////////////////////////////////////
@@ -42,7 +64,7 @@ def get_comb_sound(fs, note, duration, n_pulses, n_samples, fmag_range):
     plt.subplot(2, 1, 1)
     plt.plot(x[0:n_samples])
     plt.subplot(2, 1, 2)
-    plot_fourier_mag(x, fs)
+    plot_fourier_mag(x, fs, res_string)
     plt.xlim([0, fmag_range])
     plt.savefig("sonisrc/imgfigres/" + res_string + ".png")
     wavfile.write("sonisrc/audiores/" + res_string+".wav", fs, x)
@@ -50,27 +72,40 @@ def get_comb_sound(fs, note, duration, n_pulses, n_samples, fmag_range):
     return res_string
 
 
-# """
-# //////////////////////////////////////////////////////////////
-# Square Waves
-# //////////////////////////////////////////////////////////////
-# """
-# note = 0
-# freq = 440*(2**(note/12))
-# fs = 44100
-# duration = 1
-# t = np.linspace(0, duration, duration * fs)
+"""
+//////////////////////////////////////////////////////////////
+Square Waves
+//////////////////////////////////////////////////////////////
+"""
 
-# y = np.sin(2*np.pi*freq*t)
-# plt.plot(t, y)
-# plt.xlim([0, 0.01])
-# plt.xlabel("Seconds")
+def make_sine_wave(fs, note, duration):
+    freq = 440 * 2(2 **(note/12))
+    t = np.linspace(0, duration, duration*fs)
+    y = np.sin(np.pi*freq*t);
+    res_string = "Sine Wave" + str(fs) + str(note) + str(duration)
+    wavfile.write("sonisrc/imgfigres/" + res_string + ".wav", fs, y)
+    return res_string
 
-# z = np.sign(y)
-# plt.plot(t,z)
-# plt.xlim([0,0.01])
-# plt.xlabel("Seconds")
-# ipd.Audio(z, rate=fs)
+def get_square_wave(fs,note,duration):
+    freq = 440 * 2(2 **(note/12))
+    t = np.linspace(0, duration, duration * fs)
+    y = np.sin(2*np.pi*freq*t)
+    z = np.sign(y)
+
+    plt.subplot(2,1,1)
+    plt.plot(t, y)
+    plt.xlim([0, 0.01])
+    plt.xlabel("Seconds")
+    plt.subplot(2,1,2)
+    plt.plot(t,z)
+    plt.xlim([0,0.01])
+    plt.xlabel("Seconds")
+
+    res_string = "Square Wave" + str(fs) + str(note) + str(duration)
+    plt.savefig("sonisrc/imgfigres/" + res_string + ".png")
+    wavfile.write("sonisrc/imgfigres/" + res_string + ".wav", fs, z)
+
+    return res_string
 
 # """
 # //////////////////////////////////////////////////////////////
@@ -78,38 +113,13 @@ def get_comb_sound(fs, note, duration, n_pulses, n_samples, fmag_range):
 # //////////////////////////////////////////////////////////////
 # """
 
-# def load_audio_mono(filename):
-#     """
-#     Load audio from a .wav file, mixing stereo 
-#     to mono if necessary
-#     Parameters
-#     ----------
-#     filename: string
-#         Path to file
-    
-#     Returns
-#     -------
-#     fs: int
-#         Sample rate
-#     x: ndarray(N)
-#         Mono audio
-#     """
-#     fs, x = wavfile.read(filename)
-#     if len(x.shape) > 1:
-#         x = np.mean(x, 1)
-#     return fs, x
-
-# ## TODO: Change this to your own example
-# #I used my bands newest song
-# fs, x = load_audio_mono("bb7w.wav")
-# fs, h = load_audio_mono("imp_JFKTunnel.wav")
-# # This is a faster version of convolve that uses fancy math
-# y = fftconvolve(x, h) 
-
-# y /= np.max(np.abs(y))
-# wavfile.write("jessiesgirl_JFKTunnel.wav", fs, y)
-
-# ipd.Audio(y, rate=fs)
+def get_convolved_audio(fs, song_one, song_two):
+    fs, x = load_audio_mono(song_one)
+    fs, h = load_audio_mono(song_two)
+    y = fftconvolve(x,h)
+    y /= np.max(np.abs(y))
+    res_string = "Convolve Two Sample" + str(fs) + song_one + song_two
+    wavfile.write("sonisrc/imgfigres/" + res_string + ".wav", fs, y)
 
 # """
 # //////////////////////////////////////////////////////////////
@@ -266,10 +276,4 @@ def get_comb_sound(fs, note, duration, n_pulses, n_samples, fmag_range):
 
 # //////////////////////////////////////////////////////////////
 # """
-
-# def make_sine(freq,length):
-#     t = np.linspace(0, length, length*44100, False)
-#     y = np.sin(np.pi*freq*t);
-#     wavfile.write("test.wav", 44100, y)
-#     return "test.wav"
     
