@@ -1,34 +1,25 @@
 import React from "react";
 
-
-
-
-
-
-  let data2 = {
-    soniType: "comb_sound",
-    fs: 44100,
-    note: 5,
-    length: 1,
-    n_pulses: 200,
-    n_samples: 1000,
-    range: 4000
-  };
-
-
-
 const CombFilter = ({sendSoniReq}) => {
 
   let data1 = {
-    soniType: "comb_sound",
+    soni_type: "comb_sound",
     fs: 44100,
-    note: 1,
-    length: 1,
-    n_pulses: 200,
-    n_samples: 1000,
-    c_range: 8000
+    makeplot: true,
+    soni_params: {
+      note: 1,
+      duration: 1,
+      n_pulses: 200,
+      n_samples: 1000,
+      fmag_range: 8000
+    }
   };
 
+  return (
+    <div className="CombFilter">
+      <button className="CFButton" onClick={() => sendSoniReq(data1)}>New Soni</button>
+    </div>
+  )
 
 }
 

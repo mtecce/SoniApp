@@ -1,13 +1,11 @@
-import {useState} from 'react';
-
-import {useQuery} from 'react-query';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-
 import CombFilter from './components/CombFilter';
-
 import './App.css';
 
 function App() {
+
+  const [currentreq, setcurreq] = useState("");
 
   const sendSoniRequest = (sendData) => {
     axios({
@@ -16,14 +14,35 @@ function App() {
       params: sendData
     })
     .then((response) => {
-      return response.data['directory']
+      if (!currentreq){
+        setcurreq(response.data["directory"]);
+        console.log(currentreq);
+      }else if(response.data["directory"] == currentreq){
+        console.log("bypass");
+        requestPreviousResults();
+      }
     });
   };
 
+  const requestPreviousResults = () => {
+    axios({
+      method: "get",
+      url:"/_prevresults"
+    })
+    .then((response) => {
+      console.log(response.data["results"]);
+    });
+  };
 
-  return
-  (
+  useEffect(() => {
+    console.log(currentreq);
+  },[currentreq]);
+
+  
+
+  return (
     <div className="App">
+      <p>{currentreq}</p>
       <CombFilter sendSoniReq={sendSoniRequest}/>
     </div>
   );

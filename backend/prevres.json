@@ -1,0 +1,21 @@
+{
+  "results": [
+    {
+      "lastreq": {},
+      "res_string": ""
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "44100",
+        "makeplot": "true",
+        "soni_params": "{\"note\":1,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound441001120010008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound441001120010008000.png",
+        "sonisrc/audiores/Combsound441001120010008000.wav"
+      ]
+    }
+  ]
+}
