@@ -1,0 +1,58 @@
+:root{
+    --c1: rgb(105 171 165);
+    --c2 : rgb(103 159 130);
+    --c3: rgb(150 187 150);
+    --c4: rgb(189 214 192);
+    --c5: rgb(236 237 230);
+}
+
+.menubar_wrapper {
+    position: relative;
+    display: flex;
+    background-color: var(--c5);
+}
+
+.back_arrow_wrapper {
+
+}
+
+.back_arrow {
+
+}
+
+.current_page_wrapper {
+
+}
+
+.current_page {
+
+}
+
+/* from @baby_wolf_codes */
+.loadingdots {
+    display: flex;
+    gap: 8px;
+}
+
+.loadingdots > .dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--c1);
+    animation: blur .75s infinite alternate;
+}
+
+.loadingdots > .dot:nth-child(2) {
+    animation-delay: 150ms;
+}
+
+.loadingdots > .dot:nth-child(3) {
+    animation-delay: 300ms;
+}
+
+@keyframes blur{
+    to {
+        filter: blur(4px);
+        opacity: 0;
+    }
+}

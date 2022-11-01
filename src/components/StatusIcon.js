@@ -9,9 +9,9 @@ const StatusIcon = ({status}) => {
     if(status === "active"){
         return (
             <div className="loadingdots">
-                <span className="d1"></span>
-                <span className="d2"></span>
-                <span className="d3"></span>
+                <div className="dot"></div>
+                <div className="dot"></div>
+                <div className="dot"></div>
             </div>
         )
     }else{
