@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 
-const CombFilter = ({sendSoniReq}) => {
+const CombFilter = ({sendSoniReq,getNote,currentRequest}) => {
 
   let data1 = {
     soni_type: "comb_sound",
