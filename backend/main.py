@@ -18,10 +18,14 @@ function_dic = {
 }
 
 last_req = {
-    "soni_type": "",
-    "fs": 0,
-    "makeplot": False,
-    "soni_params": {}
+    "lastreq": {
+        "soni_type": "",
+        "fs": "",
+        "makeplot": "",
+        "soni_params": ""
+    },
+    "res_string": "",
+    "paths": []
 }
 
 prev_results = []
@@ -41,7 +45,8 @@ def update_previous_results():
 def update_last_req():
     global last_req
     global prev_results
-    last_req = prev_results[len(prev_results)-1]
+    if len(prev_results) > 0:
+        last_req = prev_results[len(prev_results)-1]
 
 def create_res_list_item(last_req, res_string, paths):
     return {"lastreq":last_req,"res_string":res_string, "paths":paths}

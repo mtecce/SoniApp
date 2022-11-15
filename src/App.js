@@ -32,7 +32,7 @@ function App() {
       }
     }else if(num<0){
       octaveAdd += ((num + difVal) / 12);
-      if(difVal != 0){
+      if(difVal !== 0){
         difVal = 12 - difVal;
         if(difVal<3){
           octaveAdd--;
@@ -44,9 +44,10 @@ function App() {
   };
 
   const [currentreq, setcurreq] = useState("");
-  const [soniStatus, setSoniStatus] = useState("active");
+  const [soniStatus, setSoniStatus] = useState("innactive");
 
   const sendSoniRequest = (sendData) => {
+    setSoniStatus("active");
     axios({
       method: "get",
       url:"/_soniReq",
@@ -56,10 +57,11 @@ function App() {
       if (!currentreq){
         setcurreq(response.data["directory"]);
         console.log(currentreq);
-      }else if(response.data["directory"] == currentreq){
+      }else if(response.data["directory"] === currentreq){
         console.log("bypass");
         requestPreviousResults();
       }
+      setSoniStatus("innactive");
     });
   };
 
@@ -75,28 +77,17 @@ function App() {
 
   useEffect(() => {
     console.log(currentreq);
-  },[currentreq]);
-
-  const changeSoniStatus = () => {
-    if(soniStatus === "active"){
-      setSoniStatus("innactive");
-    }else{
-      setSoniStatus("active");
-    }
-  }
-
-  
+  },[]);
 
   return (
     <div className="App">
-      <p>{currentreq}</p>
-      <button onClick={() => changeSoniStatus()}>{soniStatus}</button>
       <MenuBar currentPage={"CombFilter"} currentStatus={soniStatus}/>
       <CombFilter 
         sendSoniReq={sendSoniRequest}
         getNote={convertNoteFromValue} 
         currentRequest={currentreq}
       />
+      <p>{currentreq}</p>
     </div>
   );
 }

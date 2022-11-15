@@ -1,10 +1,6 @@
 {
   "results": [
     {
-      "lastreq": {},
-      "res_string": ""
-    },
-    {
       "lastreq": {
         "soni_type": "comb_sound",
         "fs": "44100",
@@ -15,6 +11,123 @@
       "paths": [
         "sonisrc/imgfigres/Combsound441001120010008000.png",
         "sonisrc/audiores/Combsound441001120010008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "44100",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound441000120010008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound441000120010008000.png",
+        "sonisrc/audiores/Combsound441000120010008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "44100",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"251\",\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound441000125110008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound441000125110008000.png",
+        "sonisrc/audiores/Combsound441000125110008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "44100",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"101\",\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound441000110110008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound441000110110008000.png",
+        "sonisrc/audiores/Combsound441000110110008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "44100",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"51\",\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound44100015110008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound44100015110008000.png",
+        "sonisrc/audiores/Combsound44100015110008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "44100",
+        "makeplot": "true",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound441000120010008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound441000120010008000.png",
+        "sonisrc/audiores/Combsound441000120010008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "22050",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound220500120010008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound220500120010008000.png",
+        "sonisrc/audiores/Combsound220500120010008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "22050",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"76\",\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound22050017610008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound22050017610008000.png",
+        "sonisrc/audiores/Combsound22050017610008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"76\",\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound11025017610008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound11025017610008000.png",
+        "sonisrc/audiores/Combsound11025017610008000.wav"
+      ]
+    },
+    {
+      "lastreq": {
+        "soni_type": "comb_sound",
+        "fs": "5512",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"76\",\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "Combsound5512017610008000",
+      "paths": [
+        "sonisrc/imgfigres/Combsound5512017610008000.png",
+        "sonisrc/audiores/Combsound5512017610008000.wav"
       ]
     }
   ]
