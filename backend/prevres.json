@@ -1,133 +1,143 @@
 {
   "results": [
     {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "44100",
-        "makeplot": "true",
-        "soni_params": "{\"note\":1,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
-      },
-      "res_string": "Combsound441001120010008000",
-      "paths": [
-        "sonisrc/imgfigres/Combsound441001120010008000.png",
-        "sonisrc/audiores/Combsound441001120010008000.wav"
-      ]
-    },
-    {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "44100",
-        "makeplot": "false",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
-      },
-      "res_string": "Combsound441000120010008000",
-      "paths": [
-        "sonisrc/imgfigres/Combsound441000120010008000.png",
-        "sonisrc/audiores/Combsound441000120010008000.wav"
-      ]
-    },
-    {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "44100",
-        "makeplot": "false",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"251\",\"n_samples\":1000,\"fmag_range\":8000}"
-      },
-      "res_string": "Combsound441000125110008000",
-      "paths": [
-        "sonisrc/imgfigres/Combsound441000125110008000.png",
-        "sonisrc/audiores/Combsound441000125110008000.wav"
-      ]
-    },
-    {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "44100",
-        "makeplot": "false",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"101\",\"n_samples\":1000,\"fmag_range\":8000}"
-      },
-      "res_string": "Combsound441000110110008000",
-      "paths": [
-        "sonisrc/imgfigres/Combsound441000110110008000.png",
-        "sonisrc/audiores/Combsound441000110110008000.wav"
-      ]
-    },
-    {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "44100",
-        "makeplot": "false",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"51\",\"n_samples\":1000,\"fmag_range\":8000}"
-      },
-      "res_string": "Combsound44100015110008000",
-      "paths": [
-        "sonisrc/imgfigres/Combsound44100015110008000.png",
-        "sonisrc/audiores/Combsound44100015110008000.wav"
-      ]
-    },
-    {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "44100",
-        "makeplot": "true",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
-      },
-      "res_string": "Combsound441000120010008000",
-      "paths": [
-        "sonisrc/imgfigres/Combsound441000120010008000.png",
-        "sonisrc/audiores/Combsound441000120010008000.wav"
-      ]
-    },
-    {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "22050",
-        "makeplot": "false",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
-      },
-      "res_string": "Combsound220500120010008000",
-      "paths": [
-        "sonisrc/imgfigres/Combsound220500120010008000.png",
-        "sonisrc/audiores/Combsound220500120010008000.wav"
-      ]
-    },
-    {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "22050",
-        "makeplot": "false",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"76\",\"n_samples\":1000,\"fmag_range\":8000}"
-      },
-      "res_string": "Combsound22050017610008000",
-      "paths": [
-        "sonisrc/imgfigres/Combsound22050017610008000.png",
-        "sonisrc/audiores/Combsound22050017610008000.wav"
-      ]
-    },
-    {
-      "lastreq": {
-        "soni_type": "comb_sound",
+      "request": {
+        "soni_type": "CombFilter",
         "fs": "11025",
         "makeplot": "false",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"76\",\"n_samples\":1000,\"fmag_range\":8000}"
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":287,\"n_samples\":1000,\"fmag_range\":8000}"
       },
-      "res_string": "Combsound11025017610008000",
+      "res_string": "CombFilter110250128710008000",
+      "description": "Comb Filter: (fs = 11025) (Note = 0) (Duration = 1) (Number Of Pulses = 287) (Make Plot = True) (Number of Samples = 1000) (Fourier Mag Range = 8000)",
       "paths": [
-        "sonisrc/imgfigres/Combsound11025017610008000.png",
-        "sonisrc/audiores/Combsound11025017610008000.wav"
+        "sonisrc/imgfigres/CombFilter110250128710008000.png",
+        "sonisrc/audiores/CombFilter110250128710008000.wav"
       ]
     },
     {
-      "lastreq": {
-        "soni_type": "comb_sound",
-        "fs": "5512",
+      "request": {
+        "soni_type": "CombFilter",
+        "fs": "11025",
         "makeplot": "false",
-        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":\"76\",\"n_samples\":1000,\"fmag_range\":8000}"
+        "soni_params": "{\"note\":-20,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
       },
-      "res_string": "Combsound5512017610008000",
+      "res_string": "CombFilter11025-20120010008000",
+      "description": "Comb Filter: (fs = 11025) (Note = -20) (Duration = 1) (Number Of Pulses = 200) (Make Plot = True) (Number of Samples = 1000) (Fourier Mag Range = 8000)",
       "paths": [
-        "sonisrc/imgfigres/Combsound5512017610008000.png",
-        "sonisrc/audiores/Combsound5512017610008000.wav"
+        "sonisrc/imgfigres/CombFilter11025-20120010008000.png",
+        "sonisrc/audiores/CombFilter11025-20120010008000.wav"
+      ]
+    },
+    {
+      "request": {
+        "soni_type": "CombFilter",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":23,\"duration\":6,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "CombFilter1102523620010008000",
+      "description": "Comb Filter: (fs = 11025) (Note = 23) (Duration = 6) (Number Of Pulses = 200) (Make Plot = True) (Number of Samples = 1000) (Fourier Mag Range = 8000)",
+      "paths": [
+        "sonisrc/imgfigres/CombFilter1102523620010008000.png",
+        "sonisrc/audiores/CombFilter1102523620010008000.wav"
+      ]
+    },
+    {
+      "request": {
+        "soni_type": "CombFilter",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":20,\"duration\":1,\"n_pulses\":344,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "CombFilter1102520134410008000",
+      "description": "Comb Filter: (fs = 11025) (Note = 20) (Duration = 1) (Number Of Pulses = 344) (Make Plot = True) (Number of Samples = 1000) (Fourier Mag Range = 8000)",
+      "paths": [
+        "sonisrc/imgfigres/CombFilter1102520134410008000.png",
+        "sonisrc/audiores/CombFilter1102520134410008000.wav"
+      ]
+    },
+    {
+      "request": {
+        "soni_type": "CombFilter",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":19,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "CombFilter1102519120010008000",
+      "description": "Comb Filter: (fs = 11025) (Note = 19) (Duration = 1) (Number Of Pulses = 200) (Make Plot = True) (Number of Samples = 1000) (Fourier Mag Range = 8000)",
+      "paths": [
+        "sonisrc/imgfigres/CombFilter1102519120010008000.png",
+        "sonisrc/audiores/CombFilter1102519120010008000.wav"
+      ]
+    },
+    {
+      "request": {
+        "soni_type": "CombFilter",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":-19,\"duration\":8,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "CombFilter11025-19820010008000",
+      "description": "Comb Filter: (fs = 11025) (Note = -19) (Duration = 8) (Number Of Pulses = 200) (Make Plot = True) (Number of Samples = 1000) (Fourier Mag Range = 8000)",
+      "paths": [
+        "sonisrc/imgfigres/CombFilter11025-19820010008000.png",
+        "sonisrc/audiores/CombFilter11025-19820010008000.wav"
+      ]
+    },
+    {
+      "request": {
+        "soni_type": "TriangleWave",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1}"
+      },
+      "res_string": "TriangleWave1102501",
+      "description": "Triangle Wave: (fs = 11025) (Note = 0) (Duration = 1) (Make Plot = True)",
+      "paths": [
+        "sonisrc/imgfigres/TriangleWave1102501.png",
+        "sonisrc/audiores/TriangleWave1102501.wav"
+      ]
+    },
+    {
+      "request": {
+        "soni_type": "SineWave",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1}"
+      },
+      "res_string": "SineWave1102501",
+      "description": "Sine Wave: (fs = 11025) (Note = 0) (Duration = 1) (Make Plot = True)",
+      "paths": [
+        "sonisrc/imgfigres/SineWave1102501.png",
+        "sonisrc/audiores/SineWave1102501.wav"
+      ]
+    },
+    {
+      "request": {
+        "soni_type": "SquareWave",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":\"2\"}"
+      },
+      "res_string": "SquareWave1102502",
+      "description": "Square Wave: (fs = 11025) (Note = 0) (Duration = 2) (Make Plot = True)",
+      "paths": [
+        "sonisrc/imgfigres/SquareWave1102502.png",
+        "sonisrc/audiores/SquareWave1102502.wav"
+      ]
+    },
+    {
+      "request": {
+        "soni_type": "CombFilter",
+        "fs": "44100",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":10,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "CombFilter4410001020010008000",
+      "description": "Comb Filter: (fs = 44100) (Note = 0) (Duration = 10) (Number Of Pulses = 200) (Make Plot = True) (Number of Samples = 1000) (Fourier Mag Range = 8000)",
+      "paths": [
+        "sonisrc/imgfigres/CombFilter4410001020010008000.png",
+        "sonisrc/audiores/CombFilter4410001020010008000.wav"
       ]
     }
   ]

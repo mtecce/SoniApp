@@ -8,6 +8,7 @@ const InputTopRow = ({handleInputs}) => {
             <div id="tr-in-d">
               <select
                 id="fs"
+                name="fs"
                 onChange={handleInputs}
                 className="fs-input"
               >

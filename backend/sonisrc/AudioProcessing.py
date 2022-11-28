@@ -83,9 +83,11 @@ def get_comb_sound(fs, params, makeplot = False):
     h[0::t] = 1  ## Impulse response
     x = np.convolve(y, h)
 
-    res_string = "Combsound" + str(fs) + str(note) + str(duration) + str(n_pulses) + str(n_samples) + str(fmag_range)
+    res_string = "CombFilter" + str(fs) + str(note) + str(duration) + str(n_pulses) + str(n_samples) + str(fmag_range)
+    description = "Comb Filter: (fs = " + str(fs) + ") (Note = " + str(note) + ") (Duration = " + str(duration) + ") (Number Of Pulses = " + str(n_pulses) + ") (Make Plot = " + str(makeplot) + ")"
 
     if makeplot:
+        description += " (Number of Samples = " + str(n_samples) + ") (Fourier Mag Range = " + str(fmag_range) + ")"
         plt.subplot(2, 1, 1)
         plt.plot(x[0:n_samples])
         plt.subplot(2, 1, 2)
@@ -98,7 +100,7 @@ def get_comb_sound(fs, params, makeplot = False):
     wavfile.write(ap, fs, x)
     paths.append(ap)
 
-    return res_string, paths
+    return res_string,description, paths
 
 
 """
@@ -111,13 +113,14 @@ def make_sine_wave(fs, params, makeplot = False):
 
     paths = []
 
-    note = params["note"]
-    duration = params["duration"]
+    note = int(params["note"])
+    duration = int(params["duration"])
 
     freq = get_frequency(note)
     t = np.linspace(0, duration, duration*fs)
     y = np.sin(np.pi*freq*t);
-    res_string = "Sine Wave" + str(fs) + str(note) + str(duration)
+    res_string = "SineWave" + str(fs) + str(note) + str(duration)
+    description = "Sine Wave: (fs = " + str(fs) + ") (Note = " + str(note) + ") (Duration = " + str(duration) + ") (Make Plot = " + str(makeplot) + ")"
 
     if makeplot:
         plt.plot(t,y)
@@ -127,21 +130,22 @@ def make_sine_wave(fs, params, makeplot = False):
         plt.savefig(ip)
         paths.append(ip)
     ap = makewavstr(res_string)
-    wavfile.write(ap, fs, x)
+    wavfile.write(ap, fs, y)
     paths.append(ap)
-    return res_string, paths
+    return res_string, description, paths
 
 def get_triangle_wave(fs, params, makeplot = False):
 
     paths = []
 
-    note = params["note"]
-    duration = params["duration"]
+    note = int(params["note"])
+    duration = int(params["duration"])
 
     freq = get_frequency(note)
     t = np.arange(fs*duration)
     x = np.mod(t,freq)
-    res_string = "Triangle Wave" + str(fs) + str(note) + str(duration)
+    res_string = "TriangleWave" + str(fs) + str(note) + str(duration)
+    description = "Triangle Wave: (fs = " + str(fs) + ") (Note = " + str(note) + ") (Duration = " + str(duration) + ") (Make Plot = " + str(makeplot) + ")"
 
     if makeplot:
         plt.plot(t,x)
@@ -153,22 +157,23 @@ def get_triangle_wave(fs, params, makeplot = False):
     ap = makewavstr(res_string)
     wavfile.write(ap, fs, x)
     paths.append(ap)
-    return res_string, paths
+    return res_string, description, paths
 
 
 def get_square_wave(fs, params, makeplot = False):
 
     paths = []
 
-    note = params["note"]
-    duration = params["duration"]
+    note = int(params["note"])
+    duration = int(params["duration"])
 
     freq = get_frequency(note)
     t = np.linspace(0, duration, duration * fs)
     y = np.sin(2*np.pi*freq*t)
     z = np.sign(y)
 
-    res_string = "Square Wave" + str(fs) + str(note) + str(duration)
+    res_string = "SquareWave" + str(fs) + str(note) + str(duration)
+    description = "Square Wave: (fs = " + str(fs) + ") (Note = " + str(note) + ") (Duration = " + str(duration) + ") (Make Plot = " + str(makeplot) + ")"
 
     if makeplot:
         plt.plot(t,z)
@@ -178,17 +183,17 @@ def get_square_wave(fs, params, makeplot = False):
         plt.savefig(ip)
         paths.append(ip)
     ap = makewavstr(res_string)
-    wavfile.write(ap, fs, x)
+    wavfile.write(ap, fs, z)
     paths.append(ap)
-    return res_string, paths
+    return res_string, description, paths
 
 def get_sawtooth_wave(fs, params, makeplot=False):
 
     paths = []
 
-    note = params["note"]
-    duration = params["duration"]
-    n_harmonics = params["n_harmonics"]
+    note = int(params["note"])
+    duration = int(params["duration"])
+    n_harmonics = int(params["n_harmonics"])
 
     freq = get_frequency(note)
     t = np.linspace(0, duration, duration*fs, False)
@@ -197,7 +202,8 @@ def get_sawtooth_wave(fs, params, makeplot=False):
         coeff = (1/i)*(-1)**(i+1)
         y = y + coeff*np.sin(2*np.pi*freq*i*t)
     
-    res_string = "Sawtooth Wave" + str(fs) + str(note) + str(duration) + str(n_harmonics)
+    res_string = "SawtoothWave" + str(fs) + str(note) + str(duration) + str(n_harmonics)
+    description = "Sawtooth Wave: (fs = " + str(fs) + ") (Note = " + str(note) + ") (Duration = " + str(duration) + ") (Number Of Harmonics = " + str(n_harmonics) + ") (Make Plot = " + str(makeplot) + ")"
 
     if makeplot:
         plt.plot(t,y)
@@ -207,9 +213,9 @@ def get_sawtooth_wave(fs, params, makeplot=False):
         plt.savefig(ip)
         paths.append(ip)
     ap = makewavstr(res_string)
-    wavfile.write(ap, fs, x)
+    wavfile.write(ap, fs, y)
     paths.append(ap)
-    return res_string, paths
+    return res_string, description, paths
 
 """
 //////////////////////////////////////////////////////////////
@@ -229,7 +235,9 @@ def get_convolved_audio(fs, params, makeplot = False):
     y = fftconvolve(x,h)
     y /= np.max(np.abs(y))
 
-    res_string = "Convolve Two Sample" + str(fs) + song_one + song_two
+    res_string = "Convolution" + str(fs) + song_one + song_two
+    description = "Convolution: (fs = " + str(fs) + ") (Song One = " + song_one + ") (Song Two = " + song_two + ")"
+
     ap = makewavstr(res_string)
     wavfile.write(ap, fs, x)
     paths.append(ap)
@@ -247,7 +255,8 @@ def downsample_audio(fs, params, makeplot=False):
     ds_fac = params["ds_fac"]
 
     fs, x = load_audio_mono(name)
-    res_string = "DS" + str(ds_fac) + name
+    res_string = "DownSampling" + str(ds_fac) + name
+    description = "Down Sampling: (Down Sample Factor = " + str(ds_fac) + ") (Name = " + name + ")"
     y = x[0::ds_fac]
 
     if makeplot:

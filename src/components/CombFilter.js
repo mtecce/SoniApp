@@ -1,13 +1,11 @@
 import React, {useState} from "react";
 import InputTopRow from './InputTopRow';
-import NoteSlider from './NoteSlider';
-import DurationSlider from "./DurationSlider";
-import {CFNPulses,CFNSamples,CFFMagRange} from './CFContent';
+import {NoteSlider,DurationSlider,NPulses,NSamples,FMagRange} from './Sliders';
 
-const CombFilter = ({sendSoniReq,getNote,currentRequest}) => {
+const CombFilter = ({sendSoniReq,getNote,currentResult}) => {
 
   const [state,setState] = useState({
-    fs:0,
+    fs:11025,
     makeplot: false,
     note: 0,
     noteString: "A4",
@@ -19,21 +17,18 @@ const CombFilter = ({sendSoniReq,getNote,currentRequest}) => {
 
   const submitCombFilter = e => {
     e.preventDefault();
-
     let sendData = {
-      soni_type: "comb_sound",
-      fs: state.fs,
-      makeplot: state.makeplot,
+      soni_type: "CombFilter",
+      fs: parseInt(state.fs),
+      makeplot: (state.makeplot === "true"),
       soni_params: {
-        note: state.note,
-        duration: state.duration,
-        n_pulses: state.n_pulses,
-        n_samples: state.n_samples,
-        fmag_range: state.fmag_range
+        note: parseInt(state.note),
+        duration: parseInt(state.duration),
+        n_pulses: parseInt(state.n_pulses),
+        n_samples: parseInt(state.n_samples),
+        fmag_range: parseInt(state.fmag_range)
       }
     };
-
-
     sendSoniReq(sendData);
   }
 
@@ -43,29 +38,51 @@ const CombFilter = ({sendSoniReq,getNote,currentRequest}) => {
     if(e.target.name === "note"){
       setState({
         ...state,
+        note: value,
         noteString: getNote(value)
       });
     }
   };
 
-  return (
+
+
+  return (currentResult === "Create New" ?
     <div className="CombFilter">
       <form onSubmit={submitCombFilter}>
         <div>
           <InputTopRow handleInputs={formHandler}/>
           <NoteSlider getNote={getNote} handleInputs={formHandler} states={state}/>
           <DurationSlider handleInputs={formHandler} states={state}/>
-          <CFNPulses handleInputs={formHandler} states={state}/>
+          <NPulses
+            handleInputs={formHandler}
+            states={state}
+            min={1}
+            max={400}
+            d_val={200}  
+          />
           {state.makeplot &&
-            <CFNSamples handleInputs={formHandler} states={state}/>
+            <NSamples
+              handleInputs={formHandler}
+              states={state}
+              min={0}
+              max={2000}
+              d_val={1000}  
+            />
           }
           {state.makeplot &&
-            <CFFMagRange handleInputs={formHandler} states={state}/>
+            <FMagRange
+              handleInputs={formHandler}
+              states={state}
+              min={4000}
+              max={12000}
+              d_val={8000}
+            />
           }
-          <input type="submit" value="Create"/>
+          <input type="submit" value="Create Combfilter Sample" className="submitinputbutton"/>
         </div>
       </form>
-    </div>
+    </div> : 
+    <div>Previous Result</div>
   )
 
 }

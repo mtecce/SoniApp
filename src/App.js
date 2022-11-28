@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import CombFilter from './components/CombFilter';
+import PageSelector from './components/PageSelector';
 import MenuBar from './components/MenuBar';
+import {PreviousRequests,ResultsContent} from './components/RequestsAndResults';
 import './App.css';
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
     11 : "G#"
   };
 
-  const convertNoteFromValue = (num) => {
+  const convertNote = (num) => {
+    num = parseInt(num);
     let retString = "";
     let difVal = Math.abs(num%12);
     let octaveAdd = 4;
@@ -31,7 +33,7 @@ function App() {
         octaveAdd++;
       }
     }else if(num<0){
-      octaveAdd += ((num + difVal) / 12);
+      octaveAdd += ((num + difVal) / 12); 
       if(difVal !== 0){
         difVal = 12 - difVal;
         if(difVal<3){
@@ -44,7 +46,16 @@ function App() {
   };
 
   const [currentreq, setcurreq] = useState("");
+  const [currentPage, setCurrentPage] = useState("Home");
+  const [currentResult, setCurrentResult] = useState("Create New");
+  const [audioSrc, setAudioSrc] = useState("");
+  const [prevreqs, setprevreqs] = useState({});
   const [soniStatus, setSoniStatus] = useState("innactive");
+
+  useEffect(() => {
+    requestPreviousResults();
+  },[]);
+
 
   const sendSoniRequest = (sendData) => {
     setSoniStatus("active");
@@ -55,13 +66,18 @@ function App() {
     })
     .then((response) => {
       if (!currentreq){
+        //there is no requests, memory must have been wiped
         setcurreq(response.data["directory"]);
         console.log(currentreq);
       }else if(response.data["directory"] === currentreq){
-        console.log("bypass");
-        requestPreviousResults();
+        //the previous request was identical to the current request
+        console.log("accidental repeat request");
+      }else{
+        //there existed an identical request saved in memory
+        console.log("New Request Made, or Old Request Loaded");
       }
       setSoniStatus("innactive");
+      requestPreviousResults();
     });
   };
 
@@ -71,23 +87,52 @@ function App() {
       url:"/_prevresults"
     })
     .then((response) => {
-      console.log(response.data["results"]);
+      setprevreqs(response.data["results"]);
     });
   };
 
-  useEffect(() => {
-    console.log(currentreq);
-  },[]);
+  async function requestAudioFile() {
+
+    const {data} = await axios("/_audio", {responseType: "blob"});
+
+    console.log(data);
+
+    let newurl = URL.createObjectURL(data);
+
+    console.log(newurl);
+
+    setAudioSrc(newurl);
+
+    return data;
+
+    // axios({
+    //   method: "get",
+    //   url:"/_audio",
+    //   responseType:"blob"
+    // })
+    // .then((response) => {
+    //   console.log(typeof(response));
+    
+    // });
+  }
+
+  const PageSelectorProps = {
+    sendRequest: sendSoniRequest,
+    convertNote: convertNote,
+    currentreq: currentreq,
+    page: currentPage,
+    setPage: setCurrentPage,
+    result: currentResult,
+    setResult: setCurrentResult,
+    reqs: prevreqs,
+    audio: audioSrc
+  };
 
   return (
     <div className="App">
-      <MenuBar currentPage={"CombFilter"} currentStatus={soniStatus}/>
-      <CombFilter 
-        sendSoniReq={sendSoniRequest}
-        getNote={convertNoteFromValue} 
-        currentRequest={currentreq}
-      />
-      <p>{currentreq}</p>
+      <MenuBar page={currentPage} status={soniStatus} setPage={setCurrentPage}/>
+      <PageSelector {...PageSelectorProps}/>
+      <button onClick={() => requestAudioFile()}>Try this</button>
     </div>
   );
 }

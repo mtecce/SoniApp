@@ -1,30 +1,34 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
 import json
+import io
 
 import sys
 sys.path.append('./sonisrc')
+sys.path.append('./sonisrc/audiores')
+
 from AudioProcessing import *
 
 api = Flask(__name__)
 
 function_dic = {
-    "comb_sound": get_comb_sound,
-    "sine_wave": make_sine_wave,
-    "triangle_wave": get_triangle_wave,
-    "square_wave": get_square_wave,
-    "sawtooth_wave": get_sawtooth_wave,
-    "convolve_audio": get_convolved_audio,
-    "downsample_audio": downsample_audio
+    "CombFilter": get_comb_sound,
+    "SineWave": make_sine_wave,
+    "TriangleWave": get_triangle_wave,
+    "SquareWave": get_square_wave,
+    "SawtoothWave": get_sawtooth_wave,
+    "Convolution": get_convolved_audio,
+    "DownSampling": downsample_audio
 }
 
 last_req = {
-    "lastreq": {
+    "request": {
         "soni_type": "",
         "fs": "",
         "makeplot": "",
         "soni_params": ""
     },
     "res_string": "",
+    "description": "",
     "paths": []
 }
 
@@ -33,7 +37,7 @@ prev_results = []
 def remove_oldest_result():
     global prev_results
     rs = prev_results[0]["res_string"]
-    hasplotfile = prev_results[0]["lastreq"]["makeplot"] == 'True'
+    hasplotfile = prev_results[0]["request"]["makeplot"] == 'True'
     prev_results.pop(0)
 
 def update_previous_results():
@@ -48,8 +52,8 @@ def update_last_req():
     if len(prev_results) > 0:
         last_req = prev_results[len(prev_results)-1]
 
-def create_res_list_item(last_req, res_string, paths):
-    return {"lastreq":last_req,"res_string":res_string, "paths":paths}
+def create_res_list_item(req,res_string,description,paths):
+    return {"request":req,"res_string":res_string,"description":description,"paths":paths}
 
 def addto_prevres(res_obj):
     global prev_results
@@ -69,7 +73,7 @@ def check_for_req(req):
     global prev_results
     ret_str = ""
     for r in prev_results:
-        if r["lastreq"] == req:
+        if r["request"] == req:
             ret_str = r["res_string"]
     return ret_str
 
@@ -82,7 +86,7 @@ def doSoni():
     sp_data = request.args.to_dict()
     ps = check_for_req(sp_data)
     ret_dic = {"directory": ps}
-    if sp_data == last_req["lastreq"]:
+    if sp_data == last_req["request"]:
         print("accidental repeat request")
     elif ps != "":
         print("exists already")
@@ -91,15 +95,17 @@ def doSoni():
         fs = int(sp_data["fs"])
         makeplot = bool(sp_data["makeplot"])
         params = json.loads(sp_data["soni_params"])
-        res_string, paths = function_dic[soni_type](fs,params,makeplot)
+        res_string, description, paths = function_dic[soni_type](fs,params,makeplot)
         ret_dic["directory"] = res_string
-        addto_prevres(create_res_list_item(sp_data,res_string, paths))
+        addto_prevres(create_res_list_item(sp_data,res_string, description, paths))
         print("made new results")
     return ret_dic
 
 @api.route("/_prevresults")
 def getResults():
+    global prev_results
     update_previous_results()
+
     '''
     to save
 
@@ -110,7 +116,15 @@ def getResults():
     with open("prevres.json","w") as outfile:
         outfile.write(json_obj)
     '''
-    return {"results":"boop"}
+    return {"results":prev_results}
+
+@api.route("/_audio")
+def getAudioResult():
+
+    filename = "./sonisrc/audiores/CombFilter4410001020010008000.wav"
+
+    
+    return send_file(filename, mimetype="audio/wav", as_attachment=True)
 
 
 def startup_jobs():
