@@ -1,6 +1,7 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, make_response
 import json
 import io
+import os
 
 import sys
 sys.path.append('./sonisrc')
@@ -34,11 +35,28 @@ last_req = {
 
 prev_results = []
 
+
+@api.route("/_delete_oldest")
 def remove_oldest_result():
     global prev_results
     rs = prev_results[0]["res_string"]
     hasplotfile = prev_results[0]["request"]["makeplot"] == 'True'
+    # if hasplotfile:
+    for i in range(len(prev_results[0]["paths"])):
+        os.remove(prev_results[0]["paths"][i])
+
     prev_results.pop(0)
+
+
+    return {"respo":"deleted oldest result"}
+
+def update_prevres_file():
+    global prev_results
+    data = {}
+    data['results'] = prev_results
+    json_obj = json.dumps(data, indent=2)
+    with open("prevres.json","w") as outfile:
+        outfile.write(json_obj)
 
 def update_previous_results():
     global prev_results
@@ -60,11 +78,7 @@ def addto_prevres(res_obj):
     prev_results.append(res_obj)
     if len(prev_results) > 10:
         remove_oldest_result()
-    data = {}
-    data['results'] = prev_results
-    json_obj = json.dumps(data, indent=2)
-    with open("prevres.json","w") as outfile:
-        outfile.write(json_obj)
+    update_prevres_file()
     update_previous_results()
     update_last_req()
 
@@ -124,8 +138,11 @@ def getAudioResult():
     filename = "./sonisrc/audiores/CombFilter4410001020010008000.wav"
 
     
-    return send_file(filename, mimetype="audio/wav", as_attachment=True)
+    resp = make_response(send_file(filename, mimetype="audio/wav"))
 
+    resp.headers["Cache-Control"] = "cache"
+
+    return resp
 
 def startup_jobs():
     global prev_results

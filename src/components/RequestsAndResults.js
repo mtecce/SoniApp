@@ -36,9 +36,7 @@ const ResultsContent = ({result, page, audioSrc}) => {
     }, [audioSrc]);
 
     return (
-        <div>
-            <audio id="audio" controls src={audioSrc}/>
-        </div>
+        <div id="aud_div"/>
     )
 
 };

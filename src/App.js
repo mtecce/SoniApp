@@ -91,30 +91,39 @@ function App() {
     });
   };
 
+
+  const deleteResult = (res_string) => {
+    axios({
+      method:"get",
+      url:"/_delete_oldest",
+      data: {"res_string":res_string}
+    })
+    .then((response) => {
+      console.log(response["respo"]);
+    })
+  };
+  
+
   async function requestAudioFile() {
 
-    const {data} = await axios("/_audio", {responseType: "blob"});
+    axios({
+      method: "get",
+      url:"/_audio",
+      responseType:"blob"
+    })
+    .then((response) => {
+      console.log(typeof(response));
+      let newurl = URL.createObjectURL(response.data);
 
-    console.log(data);
-
-    let newurl = URL.createObjectURL(data);
-
-    console.log(newurl);
-
-    setAudioSrc(newurl);
-
-    return data;
-
-    // axios({
-    //   method: "get",
-    //   url:"/_audio",
-    //   responseType:"blob"
-    // })
-    // .then((response) => {
-    //   console.log(typeof(response));
+      let audTag = document.createElement('audio');
+      audTag.id = "audio"; audTag.controls = "controls";
+      audTag.src = newurl; audTag.type = "audio/wav";
+      document.getElementById("aud_div").appendChild(audTag);
     
-    // });
+    });
   }
+
+
 
   const PageSelectorProps = {
     sendRequest: sendSoniRequest,
@@ -132,7 +141,7 @@ function App() {
     <div className="App">
       <MenuBar page={currentPage} status={soniStatus} setPage={setCurrentPage}/>
       <PageSelector {...PageSelectorProps}/>
-      <button onClick={() => requestAudioFile()}>Try this</button>
+      {/* <button onClick={}>Try this</button> */}
     </div>
   );
 }
