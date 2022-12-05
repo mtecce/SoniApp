@@ -17,7 +17,7 @@ const SineWave = ({sendSoniReq,getNote,currentResult}) => {
         let sendData = {
             soni_type: "SineWave",
             fs: state.fs,
-            makeplot: state.makeplot,
+            makeplot: state.makeplot === true,
             soni_params: {
                 note: state.note,
                 duration: state.duration
@@ -41,7 +41,7 @@ const SineWave = ({sendSoniReq,getNote,currentResult}) => {
         <div className="SineWave">
             <form onSubmit={submitSineWave}>
                 <div>
-                    <InputTopRow handleInputs={formHandler}/>
+                    <InputTopRow handleInputs={formHandler} useFS={true} useMP={true}/>
                     <NoteSlider getNote={getNote} handleInputs={formHandler} states={state}/>
                     <DurationSlider handleInputs={formHandler} states={state}/>
                     <input type="submit" value="Create Sine Wave" className="submitinputbutton" />
@@ -68,7 +68,7 @@ const TriangleWave = ({sendSoniReq,getNote,currentResult}) => {
         let sendData = {
             soni_type: "TriangleWave",
             fs: state.fs,
-            makeplot: state.makeplot,
+            makeplot: state.makeplot === true,
             soni_params: {
                 note: state.note,
                 duration: state.duration
@@ -92,7 +92,7 @@ const TriangleWave = ({sendSoniReq,getNote,currentResult}) => {
         <div className="TriangleWave">
             <form onSubmit={submitTriangleWave}>
                 <div>
-                    <InputTopRow handleInputs={formHandler}/>
+                    <InputTopRow handleInputs={formHandler} useFS={true} useMP={true}/>
                     <NoteSlider getNote={getNote} handleInputs={formHandler} states={state}/>
                     <DurationSlider handleInputs={formHandler} states={state}/>
                     <input type="submit" value="Create Triangle Wave" className="submitinputbutton" />
@@ -119,7 +119,7 @@ const SquareWave = ({sendSoniReq,getNote,currentResult}) => {
         let sendData = {
             soni_type: "SquareWave",
             fs: state.fs,
-            makeplot: state.makeplot,
+            makeplot: state.makeplot === true,
             soni_params: {
                 note: state.note,
                 duration: state.duration
@@ -143,7 +143,7 @@ const SquareWave = ({sendSoniReq,getNote,currentResult}) => {
         <div className="SquareWave">
             <form onSubmit={submitSquareWave}>
                 <div>
-                    <InputTopRow handleInputs={formHandler}/>
+                    <InputTopRow handleInputs={formHandler} useFS={true} useMP={true}/>
                     <NoteSlider getNote={getNote} handleInputs={formHandler} states={state}/>
                     <DurationSlider handleInputs={formHandler} states={state}/>
                     <input type="submit" value="Create Square Wave" className="submitinputbutton" />
@@ -171,7 +171,7 @@ const SawtoothWave = ({sendSoniReq,getNote,currentResult}) => {
         let sendData = {
             soni_type: "SawtoothWave",
             fs: state.fs,
-            makeplot: state.makeplot,
+            makeplot: state.makeplot === true,
             soni_params: {
                 note: state.note,
                 duration: state.duration,
@@ -196,7 +196,7 @@ const SawtoothWave = ({sendSoniReq,getNote,currentResult}) => {
         <div className="SawtoothWave">
             <form onSubmit={submitSawtoothWave}>
                 <div>
-                    <InputTopRow handleInputs={formHandler}/>
+                    <InputTopRow handleInputs={formHandler} useFS={true} useMP={true}/>
                     <NoteSlider getNote={getNote} handleInputs={formHandler} states={state}/>
                     <DurationSlider handleInputs={formHandler} states={state}/>
                     <NHarmonics handleInputs={formHandler} states={state} min={1} max={20} d_Val={10}/>

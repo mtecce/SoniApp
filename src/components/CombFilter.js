@@ -20,7 +20,7 @@ const CombFilter = ({sendSoniReq,getNote,currentResult}) => {
     let sendData = {
       soni_type: "CombFilter",
       fs: parseInt(state.fs),
-      makeplot: (state.makeplot === "true"),
+      makeplot: (state.makeplot === true),
       soni_params: {
         note: parseInt(state.note),
         duration: parseInt(state.duration),
@@ -50,7 +50,7 @@ const CombFilter = ({sendSoniReq,getNote,currentResult}) => {
     <div className="CombFilter">
       <form onSubmit={submitCombFilter}>
         <div>
-          <InputTopRow handleInputs={formHandler}/>
+          <InputTopRow handleInputs={formHandler} useFS={true} useMP={true}/>
           <NoteSlider getNote={getNote} handleInputs={formHandler} states={state}/>
           <DurationSlider handleInputs={formHandler} states={state}/>
           <NPulses

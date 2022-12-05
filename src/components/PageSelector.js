@@ -1,7 +1,9 @@
 import React from "react";
 import CombFilter from "./CombFilter";
 import {SineWave,TriangleWave,SquareWave,SawtoothWave} from "./Waves";
+import ConvolveAudio from "./ConvolveAudio";
 import { PreviousRequests, ResultsContent } from "./RequestsAndResults";
+
 
 const PageOptions = ({setPage, setResult}) => {
 
@@ -39,6 +41,8 @@ const PageSelector = ({sendRequest,convertNote,currentreq,page,setPage,result,se
                 return <SquareWave {...SoniProps}/>
             case "SawtoothWave":
                 return <SawtoothWave {...SoniProps}/>
+            case "Convolution":
+                return <ConvolveAudio sendSoniReq={sendRequest} currentResult={result}/>
             default: console.log("oops");
         };
     };

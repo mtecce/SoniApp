@@ -1,9 +1,13 @@
 import React from "react";
 
-const InputTopRow = ({handleInputs}) => {
+const InputTopRow = ({handleInputs,useFS,useMP}) => {
+
+    let fsCN = "fs-row"; if(!useFS){fsCN = "noshow"};
+    let mpCN = "mp-row"; if(!useMP){mpCN = "noshow"};
+
     return (
         <div className="toprow">
-          <div className="fs-row">
+          <div className={fsCN}>
             <p>Sample Rate</p>
             <div id="tr-in-d">
               <select
@@ -19,7 +23,7 @@ const InputTopRow = ({handleInputs}) => {
               </select>
             </div>
           </div>
-          <div className="mp-row">
+          <div className={mpCN}>
             <p>Make Plot?</p>
             <div id="tr-in-d">
               <input 

@@ -146,6 +146,11 @@
     margin: 0 0 2vh 0;
 }
 
+.toprow div.noshow,
+.toprow div:nth-child(1).noshow{
+    display: none;
+}
+
 .toprow div p{
     width: 50%;
     text-align: center;
