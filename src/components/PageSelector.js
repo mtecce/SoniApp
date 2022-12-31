@@ -2,6 +2,7 @@ import React from "react";
 import CombFilter from "./CombFilter";
 import {SineWave,TriangleWave,SquareWave,SawtoothWave} from "./Waves";
 import ConvolveAudio from "./ConvolveAudio";
+import Downsample from "./Downsample";
 import { PreviousRequests, ResultsContent } from "./RequestsAndResults";
 
 
@@ -25,24 +26,28 @@ const PageOptions = ({setPage, setResult}) => {
     )
 };
 
-const PageSelector = ({sendRequest,convertNote,currentreq,page,setPage,result,setResult,reqs,audio}) => {
+const PageSelector = ({sendGetRequest,sendPostRequest,convertNote,currentreq,page,setPage,result,setResult,reqs,audio}) => {
 
-    const SoniProps = {sendSoniReq:sendRequest, getNote:convertNote, currentResult:result};
+    const getProps = {sendSoniReq:sendGetRequest, getNote:convertNote, currentResult:result};
+    const postProps = {sendSoniReq:sendPostRequest, getNote:convertNote, currentResult:result};
+
 
     const pageswitch = () => {
         switch(page){
             case "CombFilter":
-                return <CombFilter {...SoniProps}/>
+                return <CombFilter {...getProps}/>
             case "SineWave":
-                return <SineWave {...SoniProps}/>
+                return <SineWave {...getProps}/>
             case "TriangleWave":
-                return <TriangleWave {...SoniProps}/>
+                return <TriangleWave {...getProps}/>
             case "SquareWave":
-                return <SquareWave {...SoniProps}/>
+                return <SquareWave {...getProps}/>
             case "SawtoothWave":
-                return <SawtoothWave {...SoniProps}/>
+                return <SawtoothWave {...getProps}/>
             case "Convolution":
-                return <ConvolveAudio sendSoniReq={sendRequest} currentResult={result}/>
+                return <ConvolveAudio sendSoniReq={sendPostRequest} currentResult={result}/>
+            case "DownSampling":
+                return <Downsample/>
             default: console.log("oops");
         };
     };

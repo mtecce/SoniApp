@@ -84,6 +84,7 @@ def addto_prevres(res_obj):
 
 
 def check_for_req(req):
+    print(req)
     global prev_results
     ret_str = ""
     for r in prev_results:
@@ -91,27 +92,34 @@ def check_for_req(req):
             ret_str = r["res_string"]
     return ret_str
 
-@api.route("/_soniReq")
+@api.route("/_soniReq", methods=['GET','POST'])
 def doSoni():
 
     global last_req
     global prev_results
+
     
     sp_data = request.args.to_dict()
     ps = check_for_req(sp_data)
     ret_dic = {"directory": ps}
-    if sp_data == last_req["request"]:
-        print("accidental repeat request")
-    elif ps != "":
-        print("exists already")
+
+    if sp_data == last_req["request"] or ps != "":
+        print("accidental repeat request or already exists")
     else:
         soni_type = sp_data["soni_type"]
         fs = int(sp_data["fs"])
         makeplot = bool(sp_data["makeplot"])
         params = json.loads(sp_data["soni_params"])
-        res_string, description, paths = function_dic[soni_type](fs,params,makeplot)
+
+        if request.method == 'GET':
+            res_string, description, paths = function_dic[soni_type](fs,params,makeplot)
+        else:
+            files = request.files
+            res_string, description, paths = function_dic[soni_type](fs,params,files,makeplot)
         ret_dic["directory"] = res_string
         addto_prevres(create_res_list_item(sp_data,res_string, description, paths))
+
+
         print("made new results")
     return ret_dic
 

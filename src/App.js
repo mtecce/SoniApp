@@ -57,30 +57,64 @@ function App() {
   },[]);
 
 
-  const sendSoniRequest = (sendData) => {
+  const getSoniRequest = (sendData) => {
     console.log(sendData);
-    // setSoniStatus("active");
-    // axios({
-    //   method: "get",
-    //   url:"/_soniReq",
-    //   params: sendData
-    // })
-    // .then((response) => {
-    //   if (!currentreq){
-    //     //there is no requests, memory must have been wiped
-    //     setcurreq(response.data["directory"]);
-    //     console.log(currentreq);
-    //   }else if(response.data["directory"] === currentreq){
-    //     //the previous request was identical to the current request
-    //     console.log("accidental repeat request");
-    //   }else{
-    //     //there existed an identical request saved in memory
-    //     console.log("New Request Made, or Old Request Loaded");
-    //   }
-    //   setSoniStatus("innactive");
-    //   requestPreviousResults();
-    // });
+    setSoniStatus("active");
+    axios({
+      method: "get",
+      url:"/_soniReq",
+      params: sendData
+    })
+    .then((response) => {
+      if (!currentreq){
+        //there is no requests, memory must have been wiped
+        setcurreq(response.data["directory"]);
+        console.log(currentreq);
+      }else if(response.data["directory"] === currentreq){
+        //the previous request was identical to the current request
+        console.log("accidental repeat request");
+      }else{
+        //there existed an identical request saved in memory
+        console.log("New Request Made, or Old Request Loaded");
+      }
+      setSoniStatus("innactive");
+      requestPreviousResults();
+    })
+    .catch((err) => {
+      console.log(err);
+      setSoniStatus("innactive");
+    });
   };
+
+  const postSoniRequest = (sendData,sendFiles) => {
+    setSoniStatus("active");
+    axios.post('/_soniReq',sendFiles, {
+      params: sendData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then((response) => {
+      if (!currentreq){
+        //there is no requests, memory must have been wiped
+        setcurreq(response.data["directory"]);
+        console.log(currentreq);
+      }else if(response.data["directory"] === currentreq){
+        //the previous request was identical to the current request
+        console.log("accidental repeat request");
+      }else{
+        //there existed an identical request saved in memory
+        console.log("New Request Made, or Old Request Loaded");
+      }
+      setSoniStatus("innactive");
+      requestPreviousResults();
+    })
+    .catch((err) => {
+      console.log(err);
+      setSoniStatus("innactive");
+    });
+  };
+
 
   const requestPreviousResults = () => {
     axios({
@@ -127,7 +161,8 @@ function App() {
 
 
   const PageSelectorProps = {
-    sendRequest: sendSoniRequest,
+    sendGetRequest: getSoniRequest,
+    sendPostRequest: postSoniRequest,
     convertNote: convertNote,
     currentreq: currentreq,
     page: currentPage,

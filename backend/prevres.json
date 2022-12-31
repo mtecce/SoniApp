@@ -1,3 +1,18 @@
 {
-  "results": []
+  "results": [
+    {
+      "request": {
+        "soni_type": "CombFilter",
+        "fs": "11025",
+        "makeplot": "false",
+        "soni_params": "{\"note\":0,\"duration\":1,\"n_pulses\":200,\"n_samples\":1000,\"fmag_range\":8000}"
+      },
+      "res_string": "CombFilter110250120010008000",
+      "description": "Comb Filter: (fs = 11025) (Note = 0) (Duration = 1) (Number Of Pulses = 200) (Make Plot = True) (Number of Samples = 1000) (Fourier Mag Range = 8000)",
+      "paths": [
+        "sonisrc/imgfigres/CombFilter110250120010008000.png",
+        "sonisrc/audiores/CombFilter110250120010008000.wav"
+      ]
+    }
+  ]
 }

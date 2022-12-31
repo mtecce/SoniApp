@@ -223,20 +223,25 @@ Music Statement
 //////////////////////////////////////////////////////////////
 """
 
-def get_convolved_audio(fs, params, makeplot = False):
+def get_convolved_audio(fs, params, files, makeplot = False):
+
+
+    print(files)
 
     paths = []
 
-    song_one = params["song_one"]
-    song_two = params["song_two"]
+    sound_one = files["sound_one"]
+    sound_two = files["sound_two"]
 
-    fs, x = load_audio_mono(song_one)
-    fs, h = load_audio_mono(song_two)
+    print(sound_one,sound_two)
+
+    fs, x = load_audio_mono(sound_one)
+    fs, h = load_audio_mono(sound_two)
     y = fftconvolve(x,h)
     y /= np.max(np.abs(y))
 
-    res_string = "Convolution" + str(fs) + song_one + song_two
-    description = "Convolution: (fs = " + str(fs) + ") (Song One = " + song_one + ") (Song Two = " + song_two + ")"
+    res_string = "Convolution" + str(fs) + sound_one + sound_two
+    description = "Convolution: (fs = " + str(fs) + ") (Sound One = " + sound_one + ") (Sound Two = " + sound_two + ")"
 
     ap = makewavstr(res_string)
     wavfile.write(ap, fs, x)
