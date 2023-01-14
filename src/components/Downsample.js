@@ -1,12 +1,16 @@
 import React, {useState} from "react";
-import InputTopRow from "./InputTopRow";
+//import InputTopRow from "./InputTopRow";
 
-const Downsample = ({}) => {
+const Downsample = () => {
 
-    const [state,setState] = useState({
-        audio: [],
-        makeplot: false
-    });
+    // const [state,setState] = useState({
+    //     audio: [],
+    //     makeplot: false
+    // });
+
+    return(
+        <div></div>
+    )
 
 };
 
