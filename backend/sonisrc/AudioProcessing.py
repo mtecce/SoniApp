@@ -60,6 +60,9 @@ def makeimgstr(res_string):
 def makewavstr(res_string):
     return audrespath + res_string + ".wav"
 
+def makefilenamestr(namestr):
+    return namestr[0:namestr.index(".")]
+
 """
 //////////////////////////////////////////////////////////////
 Comb Filters
@@ -225,18 +228,18 @@ Music Statement
 
 def get_convolved_audio(fs, params, files, makeplot = False):
 
-
-    print(files)
-
     paths = []
 
-    sound_one = files["sound_one"]
-    sound_two = files["sound_two"]
+    
 
-    print(sound_one,sound_two)
+    file_one = files["sound_one"]
+    file_two = files["sound_two"]
 
-    fs, x = load_audio_mono(sound_one)
-    fs, h = load_audio_mono(sound_two)
+    sound_one = makefilenamestr(file_one.filename)
+    sound_two = makefilenamestr(file_two.filename)
+
+    fs, x = load_audio_mono(file_one)
+    fs, h = load_audio_mono(file_two)
     y = fftconvolve(x,h)
     y /= np.max(np.abs(y))
 

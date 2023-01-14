@@ -3,6 +3,7 @@ import axios from 'axios';
 import PageSelector from './components/PageSelector';
 import MenuBar from './components/MenuBar';
 import {PreviousRequests,ResultsContent} from './components/RequestsAndResults';
+import Sudoku from './components/Sudoku';
 import './App.css';
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
   const [soniStatus, setSoniStatus] = useState("innactive");
 
   useEffect(() => {
-    requestPreviousResults();
+    //requestPreviousResults();
   },[]);
 
 
@@ -66,15 +67,12 @@ function App() {
       params: sendData
     })
     .then((response) => {
-      if (!currentreq){
-        //there is no requests, memory must have been wiped
+      if (!currentreq){                                       //there is no requests, memory must have been wiped
         setcurreq(response.data["directory"]);
         console.log(currentreq);
-      }else if(response.data["directory"] === currentreq){
-        //the previous request was identical to the current request
+      }else if(response.data["directory"] === currentreq){    //the previous request was identical to the current request
         console.log("accidental repeat request");
-      }else{
-        //there existed an identical request saved in memory
+      }else{                                                    //there existed an identical request saved in memory
         console.log("New Request Made, or Old Request Loaded");
       }
       setSoniStatus("innactive");
@@ -95,15 +93,12 @@ function App() {
       }
     })
     .then((response) => {
-      if (!currentreq){
-        //there is no requests, memory must have been wiped
+      if (!currentreq){                                       //there is no requests, memory must have been wiped
         setcurreq(response.data["directory"]);
         console.log(currentreq);
-      }else if(response.data["directory"] === currentreq){
-        //the previous request was identical to the current request
+      }else if(response.data["directory"] === currentreq){    //the previous request was identical to the current request
         console.log("accidental repeat request");
-      }else{
-        //there existed an identical request saved in memory
+      }else{                                                  //there existed an identical request saved in memory
         console.log("New Request Made, or Old Request Loaded");
       }
       setSoniStatus("innactive");
@@ -175,9 +170,9 @@ function App() {
 
   return (
     <div className="App">
-      <MenuBar page={currentPage} status={soniStatus} setPage={setCurrentPage}/>
-      <PageSelector {...PageSelectorProps}/>
-      {/* <button onClick={}>Try this</button> */}
+      {/* <MenuBar page={currentPage} status={soniStatus} setPage={setCurrentPage}/> */}
+      {/* <PageSelector {...PageSelectorProps}/> */}
+      <Sudoku/>
     </div>
   );
 }

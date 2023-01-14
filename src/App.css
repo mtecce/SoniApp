@@ -242,3 +242,23 @@
     font-size: 6vw;
     font-weight: bold;
 }
+
+.SudokuBoard{
+    position: relative;
+    width: 90vw;
+    margin: 5vw;
+}
+
+.SudokuRow{
+    position: relative;
+    display: flex;
+}
+
+.SudokuCell{
+    position: relative;
+    height: 10vw;
+    width: 10vw;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 8vw;
+}
