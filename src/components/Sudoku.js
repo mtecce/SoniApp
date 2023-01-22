@@ -1,4 +1,3 @@
-//import axios from "axios";
 import React, {useState,useEffect} from "react";
 
 class SudokuGenerator{
@@ -15,14 +14,12 @@ class SudokuGenerator{
             }
             this.mat.push(temp);
         }
-        this.fillValues();
+        this.fillDiagonal();
+        this.fillRemaining(0,this.SRN);
     }
 
-    fillValues(){
-        this.fillDiagonal();
-        console.log(this.mat);
-        //this.fillRemaining(0,this.SRN);
-        //this.removeKDigits();
+    getSolution(){
+        return this.mat;
     }
 
     fillDiagonal(){
@@ -34,7 +31,7 @@ class SudokuGenerator{
     unUsedInBox(rowStart,colStart,num){
         for(let i = 0; i < this.SRN; i++){
             for(let j = 0; j < this.SRN; j++){
-                if (this.mat[rowStart+1][colStart+j] == num){
+                if (this.mat[rowStart+i][colStart+j] == num){
                     return false;
                 }
             }
@@ -80,32 +77,22 @@ class SudokuGenerator{
         return true;
     }
 
-    fillRemaining(i,j){
-        if(j >= this.N && i < this.N - 1){
+    fillRemaining(ii,jj){
+        let i = ii;
+        let j = jj;
+        if(i == this.N - 1 && j == this.N){
+            return true;
+        }
+        if(j == this.N){
             i += 1;
             j = 0;
         }
-        if(i >= this.N && j >= this.N){
-            return true;
+
+        if(this.mat[i][j] != 0){
+            return this.fillRemaining(i,j+1);
         }
-        if(i < this.SRN){
-            if(j < this.SRN){
-                j = this.SRN;
-            }
-        }else if(i < this.N - this.SRN){
-            if(j == parseInt((i/this.SRN)*this.SRN)){
-                j += this.SRN;
-            }
-        }else{
-            if(j == this.N - this.SRN){
-                i += 1;
-                j = 0;
-                if (i >= this.N){
-                    return true;
-                }
-            }
-        }
-        for(let num = 1; num <= this.N; num++){
+
+        for(let num = 1; num < this.N+1; num++){
             if(this.checkIfSafe(i,j,num)){
                 this.mat[i][j] = num;
                 if(this.fillRemaining(i,j+1)){
@@ -114,61 +101,85 @@ class SudokuGenerator{
                 this.mat[i][j] = 0;
             }
         }
+
         return false;
+    }
+
+    swapZeros(){
+        for(let i = 0; i < this.N; i++){
+            for(let j = 0; j < this.N; j++){
+                if(this.mat[i][j] == 0){
+                    this.mat[i][j] = "";
+                }
+            }
+        }
     }
 
     removeKDigits(){
         let count = this.K;
         while(count != 0){
-            let cellId = Math.floor((Math.random() * 9));
-            let i = parseInt(cellId/this.N);
-            let j = parseInt(cellId%9);
-            if(j != 0){
-                j -= 1;
-            }
+            let i = parseInt(Math.floor((Math.random() * 9) ));
+            let j = parseInt(Math.floor((Math.random() * 9) ));
             if(this.mat[i][j] != 0){
                 count--;
                 this.mat[i][j] = 0;
             }
         }
+        this.swapZeros();
+        return this.mat;
     }
 
 }
 
-const SudokuMenu = () => {
 
-};
 
-const SudokuCell = ({ind,row,column,boardfuncs}) => {
+const SudokuCell = ({ind,row,shader,column,boardfuncs}) => {
 
     let board = boardfuncs.board;
-    let setboard = boardfuncs.setboard;
+    let activeBlock = boardfuncs.activeBlock;
     let setActiveBlock = boardfuncs.setActiveBlock;
 
     const [value,setValue] = useState(board[index]);
     const index = ind;
-    const id = row.toString() + column.toString();
+    const id = "r" + row.toString() + "c" + column.toString();
+
+    let cn = "SudokuCell" + shader;
 
     return (
-        <div id={id} className="SudokuCell" onClick={() => setActiveBlock([index,id])}>{board[index]}</div>
+        <div 
+            id={id} 
+            className={cn} 
+            onClick={() => {
+                setActiveBlock([index,id]);
+            }}>{value}</div>
     )
 
 };
 
-const SudokuRow = ({row,boardfuncs}) => {
+const SudokuRow = ({row,isCorner,boardfuncs}) => {
     const rowNumber = row;
 
     let placeholder = [0,0,0,0,0,0,0,0,0];
-
     return (
         <div className="SudokuRow">
             {
                 placeholder.map((ph,j) => {
+                    let ccn = "";
+                    if(isCorner){
+                        if(j < 3 || j > 5){
+                            ccn = " shadedcell";
+                        }
+                    }else{
+                        if(j > 2 && j < 6){
+                            ccn=" shadedcell";
+                        }
+                    }
                     return (
                         <SudokuCell
                             key={j}
                             ind={row*9 + j}
                             row={rowNumber}
+                            shader={ccn}
                             column={j}
                             boardfuncs={boardfuncs}
                         />
@@ -187,10 +198,15 @@ const SudokuBoard = ({boardfuncs}) => {
         <div className="SudokuBoard">
             {
                 placeholder.map((ph,i) => {
+                    let isCorner = true;
+                    if(i > 2 && i < 6){
+                        isCorner = false;
+                    }
                     return (
                         <SudokuRow
                             key={i}
                             row={i}
+                            isCorner={isCorner}
                             boardfuncs={boardfuncs}
                         />
                     )
@@ -201,63 +217,81 @@ const SudokuBoard = ({boardfuncs}) => {
 
 };
 
+//easy=45 medium=49 hard=58
+const SudokuMenu = ({makeBoard}) => {
+
+    return (
+        <div className="SudokuMenu">
+            <h1>Sudoku</h1>
+            <div className="SMBs">
+                <button onClick={()=>{makeBoard(45);}}>EASY</button>
+                <button onClick={()=>{makeBoard(49);}}>MEDIUM</button>
+                <button onClick={()=>{makeBoard(58);}}>HARD</button>
+            </div>
+        </div>
+    );
+
+
+};
+
 const Sudoku = () => {
 
-    // const [boardStatus, setBoardStatus] = useState(true);
-    // const [activeBlock, setActiveBlock] = useState([]);
-    // const [boardValues, setBoardValues] = useState([
-    //     1,2,3,4,5,6,7,8,9,
-    //     1,2,3,4,5,6,7,8,9,
-    //     1,2,3,4,5,6,7,8,9,
-    //     1,2,3,4,5,6,7,8,9,
-    //     1,2,3,4,5,6,7,8,9,
-    //     1,2,3,4,5,6,7,8,9,
-    //     1,2,3,4,5,6,7,8,9,
-    //     1,2,3,4,5,6,7,8,9,
-    //     1,2,3,4,5,6,7,8,9
-    // ]);
+    const [boardStatus, setBoardStatus] = useState(false);
+    const [activeBlock, setActiveBlock] = useState([]);
+    const [boardValues, setBoardValues] = useState([
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9
+    ]);
+    const [solutionValues, setSolutionValues] = useState([
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9,
+        1,2,3,4,5,6,7,8,9
+    ]);
+
+    
 
     useEffect(() => {
+        console.log(activeBlock);
 
-    },[]);
+    },[activeBlock]);
 
-    let sg = new SudokuGenerator(30);
-    
-    let solution = [];
+    const makeSudokuBoard = (difficulty) => {
+        let sg = new SudokuGenerator(difficulty);
+        setSolutionValues(sg.getSolution().flat());
+        setTimeout(()=>{
+            setBoardValues(sg.removeKDigits().flat());
+            setBoardStatus(true);
+        },100);
+    };
 
     let checkSolution = (ind,val) => {
 
     };
 
-    let boardfiller = (responseString) => {
-
+    let boardfuncs = {
+        status : boardStatus,
+        setstatus : setBoardStatus,
+        board : boardValues,
+        activeBlock : activeBlock,
+        setActiveBlock : setActiveBlock
     };
 
-    // let getBoard = (difficulty) => {
-    //     axios.get('/_sudoku',{
-    //         params: {
-    //             level : difficulty
-    //         }
-    //     }).then((resp) => {
-    //         boardfiller(resp.data["board"]);
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     });
-    // };
-
-    // let boardfuncs = {
-    //     board : boardValues,
-    //     setboard : setBoardValues,
-    //     setActiveBlock : setActiveBlock
-    // };
-
-    // return (boardStatus ? 
-    //     <SudokuBoard boardfuncs={boardfuncs}/> : 
-    //     <SudokuMenu setStatus={setBoardStatus}/>
-    // )
-
-    return (
-        <div></div>
+    return (boardStatus ? 
+        <SudokuBoard boardfuncs={boardfuncs}/> : 
+        <SudokuMenu makeBoard={makeSudokuBoard}/>
     )
 
 };

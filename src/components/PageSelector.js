@@ -29,7 +29,7 @@ const PageOptions = ({setPage, setResult}) => {
 const PageSelector = ({sendGetRequest,sendPostRequest,convertNote,currentreq,page,setPage,result,setResult,reqs,audio}) => {
 
     const getProps = {sendSoniReq:sendGetRequest, getNote:convertNote, currentResult:result};
-    //const postProps = {sendSoniReq:sendPostRequest, getNote:convertNote, currentResult:result};
+    const postProps = {sendSoniReq:sendPostRequest, getNote:convertNote, currentResult:result};
 
 
     const pageswitch = () => {

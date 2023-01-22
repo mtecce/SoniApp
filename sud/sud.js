@@ -17,9 +17,9 @@ class SudokuGenerator{
 
     fillValues(){
         this.fillDiagonal();
+        this.fillRemaining(0,this.SRN);
+        this.removeKDigits();
         console.log(this.mat);
-        //this.fillRemaining(0,this.SRN);
-        //this.removeKDigits();
     }
 
     fillDiagonal(){
@@ -31,7 +31,7 @@ class SudokuGenerator{
     unUsedInBox(rowStart,colStart,num){
         for(let i = 0; i < this.SRN; i++){
             for(let j = 0; j < this.SRN; j++){
-                if (this.mat[rowStart+1][colStart+j] == num){
+                if (this.mat[rowStart+i][colStart+j] == num){
                     return false;
                 }
             }
@@ -77,32 +77,22 @@ class SudokuGenerator{
         return true;
     }
 
-    fillRemaining(i,j){
-        if(j >= this.N && i < this.N - 1){
+    fillRemaining(ii,jj){
+        let i = ii;
+        let j = jj;
+        if(i == this.N - 1 && j == this.N){
+            return true;
+        }
+        if(j == this.N){
             i += 1;
             j = 0;
         }
-        if(i >= this.N && j >= this.N){
-            return true;
+
+        if(this.mat[i][j] != 0){
+            return this.fillRemaining(i,j+1);
         }
-        if(i < this.SRN){
-            if(j < this.SRN){
-                j = this.SRN;
-            }
-        }else if(i < this.N - this.SRN){
-            if(j == parseInt((i/this.SRN)*this.SRN)){
-                j += this.SRN;
-            }
-        }else{
-            if(j == this.N - this.SRN){
-                i += 1;
-                j = 0;
-                if (i >= this.N){
-                    return true;
-                }
-            }
-        }
-        for(let num = 1; num <= this.N; num++){
+
+        for(let num = 1; num < this.N+1; num++){
             if(this.checkIfSafe(i,j,num)){
                 this.mat[i][j] = num;
                 if(this.fillRemaining(i,j+1)){
@@ -111,18 +101,15 @@ class SudokuGenerator{
                 this.mat[i][j] = 0;
             }
         }
+
         return false;
     }
 
     removeKDigits(){
         let count = this.K;
         while(count != 0){
-            let cellId = Math.floor((Math.random() * 9));
-            let i = parseInt(cellId/this.N);
-            let j = parseInt(cellId%9);
-            if(j != 0){
-                j -= 1;
-            }
+            let i = parseInt(Math.floor((Math.random() * 9) ));
+            let j = parseInt(Math.floor((Math.random() * 9) ));
             if(this.mat[i][j] != 0){
                 count--;
                 this.mat[i][j] = 0;
